@@ -1,5 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import express from 'express';
+import passport from 'passport';
+
+import authRouter from './auth/router';
+import { localStrategy, jwtStrategy } from './auth/strategies';
 
 const prisma = new PrismaClient();
 
@@ -25,6 +29,11 @@ app.use(function (req, res, next) {
   next();
 });
 
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
 // add prisma to request object so all the routes
 // can access it without having to import into each
 // route file
@@ -32,6 +41,8 @@ app.use(function (req, res, next) {
   req.prisma = prisma;
   next();
 });
+
+app.use('/api/auth', authRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(process.env.PORT || 3000, () =>

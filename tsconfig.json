@@ -5,6 +5,5 @@
     "strict": true,
     "lib": ["esnext"],
     "esModuleInterop": true
-  },
-  "files": ["custom.d.ts"]
+  }
 }

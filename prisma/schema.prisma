@@ -15,6 +15,15 @@ datasource db {
 // }
 
 model User {
+  id        String  @id @default(uuid())
+  email     String  @unique
+  password  String
+  client    Client?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Client {
   id                String    @id @default(uuid())
   firstName         String
   middleName        String?
@@ -36,6 +45,8 @@ model User {
   spouseOccupation  String?
   spouseEmployer    String?
   children          Child[]
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id])
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 }
@@ -51,6 +62,6 @@ model Child {
   zip           String?
   phone         String?
   clientId      String
-  client        User           @relation(fields: [clientId], references: [id])
+  client        Client          @relation(fields: [clientId], references: [id])
   childParent   String
 }
