@@ -3,6 +3,7 @@ import express from 'express';
 import passport from 'passport';
 
 import authRouter from './auth/router';
+import clientRouter from './client/router';
 import { localStrategy, jwtStrategy } from './auth/strategies';
 
 const prisma = new PrismaClient();
@@ -43,8 +44,9 @@ app.use(function (req, res, next) {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/client', clientRouter);
 
-const port = process.env.PORT || 3000;
-app.listen(process.env.PORT || 3000, () =>
+const port = process.env.PORT || 8080;
+app.listen(process.env.PORT || 8080, () =>
   console.log(`REST API server ready on Port ${port}`)
 );

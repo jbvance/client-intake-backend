@@ -8,6 +8,12 @@ declare global {
       PWD: string;
     }
   }
+  namespace Express {
+    interface User {
+      id: string;
+      email: string;
+    }
+  }
 }
 
 // If this file has no import/export statements (i.e. is a script)
